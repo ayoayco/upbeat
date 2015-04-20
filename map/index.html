@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+  
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	
+	<title>Upbeat Store Locations</title>
+	
+	<link rel='stylesheet' type='text/css' href='css/style.css' />
+  	
+  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+  <script type='text/javascript' src='js/example.js'></script>
+  <script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=true'></script>
+  
+  <script type='text/javascript'>
+  
+    $(function() {
+    
+      var chicago = new google.maps.LatLng(41.924832, -87.697456),
+          pointToMoveTo, 
+          first = true,
+          curMarker = new google.maps.Marker({}),
+          $el;
+      
+      var myOptions = {
+          zoom: 15,
+          center: chicago,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      
+      var map = new google.maps.Map($("#map_canvas")[0], myOptions);
+    
+      $("#locations li").mouseenter(function() {
+      
+        $el = $(this);
+                
+        if (!$el.hasClass("hover")) {
+        
+          $("#locations li").removeClass("hover");
+          $el.addClass("hover");
+        
+          if (!first) { 
+            
+            // Clear current marker
+            curMarker.setMap(); 
+            
+            // Set zoom back to Chicago level
+            // map.setZoom(10);
+          }
+          
+          // Move (pan) map to new location
+          pointToMoveTo = new google.maps.LatLng($el.attr("data-geo-lat"), $el.attr("data-geo-long"));
+          map.panTo(pointToMoveTo);
+          
+          // Add new marker
+          curMarker = new google.maps.Marker({
+              position: pointToMoveTo,
+              map: map,
+              icon: "images/marker.png"
+          });
+          
+          // On click, zoom map
+          google.maps.event.addListener(curMarker, 'click', function() {
+             map.setZoom(14);
+          });
+          
+          // Fill more info area
+          $("#more-info")
+            .find("h2")
+              .html($el.find("h3").html())
+              .end()
+            .find("p")
+              .html($el.find(".longdesc").html());
+          
+          // No longer the first time through (re: marker clearing)        
+          first = false; 
+        }
+        
+      });
+      
+      $("#locations li:first").trigger("mouseenter");
+      
+    });
+
+  </script>
+
+</head>
+
+<body>
+
+	<div id="page-wrap">
+	   
+	   <ul id="locations">
+	   
+        <li data-geo-lat="14.646610" data-geo-long="121.059328" style="cursor:pointer">
+          <h3>UPBEAT - Diliman</h3>
+          <p class="longdesc"><strong>Address: </strong>Unit 44c, Magiting st., Teachers Village East, Diliman, Quezon City<br /><br /><strong>Store Hours: </strong>We are open from Monday-Sunday, 8:00am-8:30pm. ^__^</p>
+        </li>
+        
+        <li data-geo-lat="14.168250" data-geo-long="121.241464" style="cursor:pointer">
+          <h3>UPBEAT - Los Ba&ntilde;os</h3>
+          <p class="longdesc"><strong>Address: </strong>Clebelro Commercial Bldg., Ruby st., Umali Subd., Brgy. Batong Malake, Los Banos, Laguna<br /><br /><strong>Store Hours: </strong>We are open from Monday-Sunday, 8:00am-8:30pm. ^__^</p>
+        </li>
+     </ul>
+
+     <div id="map_canvas"></div>
+     
+     <div id="more-info"><div>
+     
+        <h2>More Info</h2>
+        <p>Hover over location on the left. (JavaScript must be enabled)</p>
+     
+     </div></div>
+			
+	</div>
+	
+</body>
+
+</html>
