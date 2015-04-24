@@ -458,7 +458,18 @@ ul.products li ins { text-decoration:none; }
 #introduction p:last-child { margin-bottom:0; }
 #introduction .post.type-post { border-bottom:0; }
 #introduction .post.type-post img.thumbnail { float: right; }
-#featured-products h2 { padding: 0; margin-left:-50px; margin-top:-58px; padding-left:50px; margin-bottom:0.437em; padding-right:45px; background: #8c1010; color:white; float: left; }
+#featured-products h2 {
+  padding: 0;
+  margin-left: -50px;
+  margin-top: -58px;
+  padding-left: 40px;
+  margin-bottom: 0.437em;
+  padding-right: 45px;
+  background: #8c1010;
+  color: white;
+  float: left;
+  width: 60px;
+ }
 
 #featured-products { float: left; width: 930px; margin: 0; background: url(images/featured-products.png) #f1f1f1; border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:50px 0 0 50px; -webkit-box-shadow: inset 0 0 0 6px rgba(0,0,0,0.025); -moz-box-shadow: inset 0 0 0 6px rgba(0,0,0,0.025); box-shadow: inset 0 0 0 6px rgba(0,0,0,0.025); }
 
