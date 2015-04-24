@@ -107,7 +107,7 @@
 
 
 <!-- META SLIDER GOES HERE -->
-<div id="metacontainer" style="margin:0; width:720px; float:left; margin-right: 10px;">
+<div id="metacontainer" style="margin:0; width:720px; height: 500px; float:left; margin-right: 10px;">
 	<div id="metaslider">
 	<?php 
 	if (is_front_page() || is_home()) echo do_shortcode("[metaslider id=109]");
