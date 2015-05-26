@@ -1,0 +1,1 @@
+[07-May-2015 14:12:00] PHP Fatal error:  Access level to WC_Admin_Webhooks_Table_List::get_views() must be public (as in class WP_List_Table) in /home1/ayoaycoc/public_html/upbeat/wp-content/plugins/woocommerce/includes/admin/class-wc-admin-webhooks-table-list.php on line 309
