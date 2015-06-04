@@ -49,7 +49,7 @@
 			<?php } ?>
 			</div>
 			
-			<div id="contact-info" class="col-left" style="margin-left: 90px;">
+			<div id="contact-info" class="col-left">
 			<?php if( $woo_options[ 'woo_footer_left' ] == 'true' ) {
 
 					echo stripslashes( $woo_options['woo_footer_left_text'] );
