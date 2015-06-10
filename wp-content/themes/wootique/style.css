@@ -2176,7 +2176,6 @@ span.amount {
 
 #cartcount {
 	font-size:x-small;
-	margin-left:150px;
 	text-shadow:1px 1px 2px black;
 	background:#ff8402;
 	border:1px solid red;
@@ -2185,7 +2184,7 @@ span.amount {
 	color:white;
 	position:absolute;
 	top:75px;
-	margin-left: 540px
+	margin-left: 500px
 }
 
 div.post-184 h1 {
