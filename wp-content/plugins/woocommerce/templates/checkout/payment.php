@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php endif; ?>
 
 <div id="payment" class="woocommerce-checkout-payment">
+
+<h3>Payment Method</h3>
+
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 	<ul class="payment_methods methods">
 		<?php
@@ -37,6 +40,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 	</ul>
 	<?php endif; ?>
+
+
+<table>
+	<tr>
+		<th>Items</th>
+		<th>Courier Service Provider</th>
+		<th>Price</th>
+	</tr>
+	<tr>
+		<td>1 Shirt</td>
+		<td>JRS</td>
+		<td>140 Php</td>
+	</tr>
+	<tr>
+		<td>2-4 Shirts or 1 Jacket</td>
+		<td>LBC (Small Transpack)</td>
+		<td>200 Php</td>
+	</tr>
+	<tr>
+		<td>5-8 Shirts or 2 Jackets</td>
+		<td>LBC (Large Transpack)</td>
+		<td>300 Php</td>
+	</tr>
+</table>
+*Prices are inclusive of the handler's fee
 
 	<div class="form-row place-order">
 
