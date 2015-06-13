@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php endif; ?>
 
 <div id="payment" class="woocommerce-checkout-payment">
-
+<p>NOTE: Shipping fee is not included. Please wait for the total amount payable (with shipping fee) via email upon confirmation of your order.</p>
 <h3>Payment Method</h3>
 
 	<?php if ( WC()->cart->needs_payment() ) : ?>
