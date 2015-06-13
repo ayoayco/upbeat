@@ -23,7 +23,6 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 	public function __construct() {
 		$this->id                 = 'paypal';
 		$this->has_fields         = false;
-		$this->order_button_text  = __( 'Proceed to PayPal', 'woocommerce' );
 		$this->method_title       = __( 'PayPal', 'woocommerce' );
 		$this->method_description = __( 'PayPal standard works by sending customers to PayPal where they can enter their payment information.', 'woocommerce' );
 		$this->supports           = array(
@@ -224,6 +223,7 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 	 * @return array
 	 */
 	public function process_payment( $order_id ) {
+		/*
 		include_once( 'includes/class-wc-gateway-paypal-request.php' );
 
 		$order          = wc_get_order( $order_id );
@@ -233,6 +233,26 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 			'result'   => 'success',
 			'redirect' => $paypal_request->get_request_url( $order, $this->testmode )
 		);
+		*/
+
+
+		$order = wc_get_order( $order_id );
+
+		// Mark as on-hold (we're awaiting the payment)
+		$order->update_status( 'on-hold', __( 'Awaiting bpi payment', 'woocommerce' ) );
+
+		// Reduce stock levels
+		$order->reduce_order_stock();
+
+		// Remove cart
+		WC()->cart->empty_cart();
+
+		// Return thankyou redirect
+		return array(
+			'result'    => 'success',
+			'redirect'  => $this->get_return_url( $order )
+		);
+
 	}
 
 	/**

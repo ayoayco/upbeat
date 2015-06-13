@@ -66,6 +66,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 </table>
 *Prices are inclusive of the handler's fee
 
+<br />
+<br />
+
 	<div class="form-row place-order">
 
 		<noscript><?php _e( 'Since your browser does not support JavaScript, or it is disabled, please ensure you click the <em>Update Totals</em> button before placing your order. You may be charged more than the amount stated above if you fail to do so.', 'woocommerce' ); ?><br/><input type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="<?php _e( 'Update totals', 'woocommerce' ); ?>" /></noscript>
