@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php do_action( 'woocommerce_review_order_before_payment' ); ?>
 <?php endif; ?>
 
-<div id="payment" class="woocommerce-checkout-payment">
+<div id="payment" class="woocommerce-checkout-payment" style="margin-top: -25px">
 <p>NOTE: Shipping fee is not included. Please wait for the total amount payable (with shipping fee) via email upon confirmation of your order.</p>
 <h3>Payment Method</h3>
 
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<td>300 Php</td>
 	</tr>
 </table>
-*Prices are inclusive of the handler's fee
+NOTE: Prices are inclusive of the handler's fee
 
 <br />
 <br />
