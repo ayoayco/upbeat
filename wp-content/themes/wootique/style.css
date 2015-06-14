@@ -124,7 +124,7 @@ input:focus, textarea:focus { background: #fff; }
 
 /* 1.2 Hyperlinks */
 
-a { color: #6e95b6; text-decoration:none;}
+a { color: #8c1010; text-decoration:none;}
 a:hover {text-decoration:underline;}
 
 h1 a:link, h1 a:visited, h2 a:link, h2 a:visited, h3 a:link, h3 a:visited,
