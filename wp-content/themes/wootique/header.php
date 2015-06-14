@@ -92,12 +92,15 @@
 						}
 						?>
 			        </ul><!-- /#nav -->
-			        <?php } ?>
+			        <?php }
+						if($woocommerce->cart->cart_contents_count > 0) echo '<span style="float: right; margin-top: -25px;" id="cartcount">'.sprintf(_n('%d', '%d', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count).'</span>';
+			        ?>
+
 			        
 			    <!-- cart link -->
 			        <!--?php woo_nav_after(); ?-->
 				</div><!-- /#navigation -->				<?php woo_nav_before(); ?>
-				<?php if($woocommerce->cart->cart_contents_count > 0) echo '<span id="cartcount">'.sprintf(_n('%d', '%d', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count).'</span>';?>
+				
 
 
 				
