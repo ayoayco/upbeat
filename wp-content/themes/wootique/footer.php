@@ -40,46 +40,44 @@
 			
 			</div><!-- /#top -->
 			<div id="copyright" class="col-left" style="margin-left: 50px;">
-			<?php if( $woo_options[ 'woo_footer_left' ] == 'true' ) {
+				<?php if( $woo_options[ 'woo_footer_left' ] == 'true' ) {
 
-					echo stripslashes( $woo_options['woo_footer_left_text'] );
+						echo stripslashes( $woo_options['woo_footer_left_text'] );
 
-			} else { ?>
-				<p><?php bloginfo(); ?> &copy; <?php echo date( 'Y' ); ?>. <?php _e( 'All Rights Reserved.<br />', 'woothemes' ); ?><img height="80px" src="<?php echo home_url('/')."wp-content/uploads/2014/06/logo-clear.png" ; ?>" style="border: none;" alt="Upbeat Merchandise" /></a></p>
-			<?php } ?>
+				} else { ?>
+					<p><?php bloginfo(); ?> &copy; <?php echo date( 'Y' ); ?>. <?php _e( 'All Rights Reserved.<br />', 'woothemes' ); ?><img height="80px" src="<?php echo home_url('/')."wp-content/uploads/2014/06/logo-clear.png" ; ?>" style="border: none;" alt="Upbeat Merchandise" /></a>
+				<?php } ?></p>
 			</div>
-			
+				
 			<div id="contact-info" class="col-left">
-			<?php if( $woo_options[ 'woo_footer_left' ] == 'true' ) {
+				<?php if( $woo_options[ 'woo_footer_left' ] == 'true' ) {
 
-					echo stripslashes( $woo_options['woo_footer_left_text'] );
+						echo stripslashes( $woo_options['woo_footer_left_text'] );
 
-			} else { ?>
-				<p style="width:100%; border: 1 solid black;">
-					CONTACT US<br />
-					For Inquiries or updates on your order status:
-					<ul style="font-size: small; color: #ccc; margin-top: -15px;">
-					<li>Call or text us:  09178449126 </li>
-					<li>You could also email us: mail@upbeat.ph</li> 
-					</ul>
-				</p>
-			<?php } ?>
+				} else { ?>
+					<p style="width:100%; border: 1 solid black;">
+						CONTACT US<br />
+						For Inquiries or updates on your order status:
+						<ul style="font-size: small; color: #ccc; margin-top: -15px;">
+						<li>Call or text us:  09178449126 </li>
+						<li>You could also email us: mail@upbeat.ph</li> 
+						</ul>
+					</p>
+				<?php } ?>
 			</div>
-			
-
 
 			<div id="credit" class="col-right" style="margin-right: 50px; float: right;">
-	        <?php if( $woo_options[ 'woo_footer_right' ] == 'true' ){
+		        <?php if( $woo_options[ 'woo_footer_right' ] == 'true' ){
 
-	        	echo stripslashes( $woo_options['woo_footer_right_text'] );
+		        	echo stripslashes( $woo_options['woo_footer_right_text'] );
 
-			} else { ?>
-				<p><?php _e( 'Development and Design by<br />', 'woothemes' ); ?> <a title="AbsorbingDesign Studio" style="color: #ff8402; font-weight:bold;" href="http://absorbingdesign.com"><img id="footerlogo" src="<?php echo home_url('/')."wp-content/uploads/2014/06/logo-small.png" ; ?>" style="border: none;" alt="AbsorbingDesign" /></a></p>
-			<?php } ?>
+				} else { ?>
+					<p><?php _e( 'Development and Design by<br />', 'woothemes' ); ?> <a title="AbsorbingDesign Studio" style="color: #ff8402; font-weight:bold;" href="http://absorbingdesign.com"><img id="footerlogo" src="<?php echo home_url('/')."wp-content/uploads/2014/06/logo-small.png" ; ?>" style="border: none;" alt="AbsorbingDesign" /></a></p>
+				<?php } ?>
 			</div>
 
 		</div><!-- /#footer  -->
-	</div>
+	</div><!-- /#outer-footer -->
 
 </div><!-- /#wrapper -->
 <?php wp_footer(); ?>
