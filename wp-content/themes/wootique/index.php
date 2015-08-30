@@ -39,7 +39,7 @@
 		<div style="clear:both;"></div>
 
 		<div style="border-top: solid 15px #8c1010; margin-top:5px;" id="featured-products" class="<?php if ( get_option( 'woo_featured_product_style' ) == 'slider' ) { echo 'fp-slider'; } ?>">
-			<h2 style="background: url('<?php echo $woocommerce->plugin_url() . '/assets/images/splices/h2.png'?>');"><?php _e( 'Sale', 'woothemes' ); ?></h2>
+			<h2 style="width: 140px; background: url('<?php echo $woocommerce->plugin_url() . '/assets/images/splices/h2.png'?>') right center no-repeat; "><?php _e( 'Featured', 'woothemes' ); ?></h2>
 
 			<ul class="featured-products">
 				<?php
