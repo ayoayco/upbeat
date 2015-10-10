@@ -10,254 +10,174 @@
 require_once( dirname( __FILE__ ) . '/admin.php' );
 
 wp_enqueue_style( 'wp-mediaelement' );
-wp_enqueue_script( 'wp-playlist' );
-add_action( 'admin_footer', 'wp_underscore_playlist_templates', 0 );
+wp_enqueue_script( 'wp-mediaelement' );
+wp_localize_script( 'mediaelement', '_wpmejsSettings', array(
+	'pluginPath' => includes_url( 'js/mediaelement/', 'relative' ),
+	'pauseOtherPlayers' => ''
+) );
 
 $title = __( 'About' );
 
 list( $display_version ) = explode( '-', $wp_version );
 
 include( ABSPATH . 'wp-admin/admin-header.php' );
+
+$video_url = 'https://videopress.com/embed/T54Iy7Tw';
+$locale    = str_replace( '_', '-', get_locale() );
+if ( 'en-AU' !== $locale ) {
+	list( $locale ) = explode( '-', $locale );
+}
+if ( 'en' !== $locale ) {
+	$video_url = add_query_arg( 'defaultLangCode', $locale, $video_url );
+}
+
+$major_features = array(
+	array(
+		'src'         => array(
+			'mp4'  => '//s.w.org/images/core/4.3/formatting.mp4',
+			'ogv'  => '//s.w.org/images/core/4.3/formatting.ogv',
+			'webm' => '//s.w.org/images/core/4.3/formatting.webm',
+		),
+		'heading'     => __( 'Formatting Shortcuts' ),
+		/* Translators: 1: asterisks; 2: number sign; */
+		'description' => sprintf( __( 'Your writing flow just got faster with new formatting shortcuts in WordPress 4.3. Use asterisks to create lists and number signs to make a heading. No more breaking your flow; your text looks great with a %1$s and a %2$s.' ), '<code>*</code>', '<code>#</code>' ),
+	),
+	array(
+		'src'         => '//s.w.org/images/core/4.3/menu-customizer.png',
+		'heading'     => __( 'Menus in the Customizer' ),
+		'description' => __( 'Create your menu, update it, and assign it, all while live-previewing in the customizer. The streamlined customizer design provides a mobile-friendly and accessible interface. With every release, it becomes easier and faster to make your site just the way you want it.' ),
+	),
+	array(
+		'src'         => '//s.w.org/images/core/4.3/better-passwords.png',
+		'heading'     => __( 'Better Passwords' ),
+		'description' => __( 'Keep your site more secure with WordPress&#8217; improved approach to passwords. Instead of receiving passwords via email, you&#8217;ll get a password reset link. When you add new users to your site or edit a user profile, WordPress will automatically generate a secure password.' ),
+	),
+	array(
+		'src'         => '//s.w.org/images/core/4.3/site-icon-customizer.png',
+		'heading'     => __( 'Site Icons' ),
+		'description' => __( 'Site icons represent your site in browser tabs, bookmark menus, and on the home screen of mobile devices. Add your unique site icon in the customizer; it will even stay in place when you switch themes. Make your whole site reflect your brand.' ),
+	),
+);
+shuffle( $major_features );
+
+$minor_features = array(
+	array(
+		'src'         => 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIj48cGF0aCBmaWxsPSIjMDBhMGQyIiBkPSJNNTAgMjE1aDI0MHYzMEg1MHpNNTAgMjc1aDI0MHYzMEg1MHpNNTAgMTU1aDI0MHYzMEg1MHpNNTAgOTVoMjQwdjMwSDUwek0zMTAuMSA5NWwxOS45IDMwIDIwLjEtMzAiLz48L3N2Zz4=',
+		'heading'     => __( 'A smoother admin experience' ),
+		'description' => __( 'Refinements to the list view across the admin make your WordPress more accessible and easier to work with on any device.' ),
+	),
+	array(
+		'src'         => 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+PHBhdGggZmlsbD0iIzAwYTBkMiIgZD0iTTUgMmgxMHEuODIgMCAxLjQxLjU5VDE3IDR2OHEwIC44Mi0uNTkgMS40MVQxNSAxNGgtMmwtNSA1di01SDVxLS44MiAwLTEuNDEtLjU5VDMgMTJWNHEwLS44Mi41OS0xLjQxVDUgMnptOC41IDguNUwxMSA4bDIuNS0yLjUtMS0xTDEwIDcgNy41IDQuNWwtMSAxTDkgOGwtMi41IDIuNSAxIDFMMTAgOWwyLjUgMi41eiIvPjwvc3ZnPg==',
+		'heading'     => __( 'Comments turned off on pages' ),
+		'description' => __( 'All new pages that you create will have comments turned off. Keep discussions to your blog, right where they&#8217;re supposed to happen.' ),
+	),
+	array(
+		'src'         => 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZmlsbD0iIzAwYTBkMiIgZD0iTTI5LjMyOCA1LjcxMnEuMDQ4LS4xNDQuMDk2LS4zODR0LS4wNjQtLjgxNi0uNTI4LS45NzZxLS4zODQtLjM2OC0uODcyLS40NjR0LS43OTIgMGwtLjI4OC4wOHEtMS40NTYuNzItNS44OCAzLjczNnQtNi4zOTIgNS4xNzZxLS43MzYuODMyLTEuNDA4IDIuMzJ0LS44OCAzIC41NDQgMi4zOTJxLjgzMi43MzYgMi4zNDQuNTc2dDMuMDcyLS44MjQgMi4yNDgtMS4zNTJxMi4xNDQtMi4xNDQgNS4xNjgtNi42NTZ0My42MzItNS44MDh6TTIuMjQgMjguMjRxMS4wNTYtLjY4OCAxLjcxMi0xLjUyOHQuOTUyLTEuNjE2LjU0NC0xLjUyLjcyLTEuNDggMS4yNC0xLjI4cTEuMDg4LS44IDIuNTA0LS43MDR0Mi40MjQgMS4xNjhxLjgxNi44OC44MjQgMi42NHQtMS4wOCAyLjg5NnEtMS4yMTYgMS4xMi0yLjkwNCAxLjYyNHQtMy40MjQuNDI0LTMuNTEyLS42MjR6Ii8+PC9zdmc+',
+		'heading'     => __( 'Customize your site quickly' ),
+		'description' => __( 'Wherever you are on the front-end, you can click the customize link in the toolbar to swiftly make changes to your site.' ),
+	),
+);
+
+$tech_features = array(
+	array(
+		'heading'     => __( 'Taxonomy Roadmap' ),
+		'description' => __( 'Terms shared across multiple taxonomies are now split into separate terms.' ),
+	),
+	array(
+		'heading'     => __( 'Template Hierarchy' ),
+		/* Translators: 1: singular.php; 2: single.php; 3:page.php */
+		'description' => sprintf( __( 'Added %1$s as a fallback for %2$s and %3$s' ), '<code>singular.php</code>', '<code>single.php</code>', '<code>page.php</code>.' ),
+	),
+	array(
+		'heading'     => '<code>WP_List_Table</code>',
+		'description' => __( 'List tables can and should designate a primary column.' ),
+	),
+);
+
 ?>
-<!--[if lt IE 9]><script>document.createElement('audio');document.createElement('video');</script><![endif]-->
-<div class="wrap about-wrap">
+	<div class="wrap about-wrap">
+		<h1><?php printf( __( 'Welcome to WordPress&nbsp;%s' ), $display_version ); ?></h1>
 
-<h1><?php printf( __( 'Welcome to WordPress&nbsp;%s' ), $display_version ); ?></h1>
+		<div class="about-text"><?php printf( __( 'Thank you for updating! WordPress %s makes it even easier to format your content and customize your site.' ), $display_version ); ?></div>
+		<div class="wp-badge"><?php printf( __( 'Version %s' ), $display_version ); ?></div>
 
-<div class="about-text"><?php printf( __( 'Thank you for updating! WordPress %s has lots of refinements we think you&#8217;ll love.' ), $display_version ); ?></div>
+		<h2 class="nav-tab-wrapper">
+			<a href="about.php" class="nav-tab nav-tab-active"><?php _e( 'What&#8217;s New' ); ?></a>
+			<a href="credits.php" class="nav-tab"><?php _e( 'Credits' ); ?></a>
+			<a href="freedoms.php" class="nav-tab"><?php _e( 'Freedoms' ); ?></a>
+		</h2>
 
-<div class="wp-badge"><?php printf( __( 'Version %s' ), $display_version ); ?></div>
-
-<h2 class="nav-tab-wrapper">
-	<a href="about.php" class="nav-tab nav-tab-active">
-		<?php _e( 'What&#8217;s New' ); ?>
-	</a><a href="credits.php" class="nav-tab">
-		<?php _e( 'Credits' ); ?>
-	</a><a href="freedoms.php" class="nav-tab">
-		<?php _e( 'Freedoms' ); ?>
-	</a>
-</h2>
-
-<div class="changelog point-releases">
-	<h3><?php echo _n( 'Maintenance and Security Release', 'Maintenance and Security Releases', 2 ); ?></h3>
-	<p><?php printf( _n( '<strong>Version %1$s</strong> addressed a security issue.',
-         '<strong>Version %1$s</strong> addressed some security issues.', 9 ), '3.9.3', number_format_i18n( 9 ) ); ?>
-		<?php printf( __( 'For more information, see <a href="%s">the release notes</a>.' ), 'http://codex.wordpress.org/Version_3.9.3' ); ?>
- 	</p>
-	<p><?php printf( _n( '<strong>Version %1$s</strong> addressed a security issue.',
-         '<strong>Version %1$s</strong> addressed some security issues.', 6 ), '3.9.2', number_format_i18n( 6 ) ); ?>
-		<?php printf( __( 'For more information, see <a href="%s">the release notes</a>.' ), 'http://codex.wordpress.org/Version_3.9.2' ); ?>
- 	</p>
-	<p><?php printf( _n( '<strong>Version %1$s</strong> addressed %2$s bug.',
-         '<strong>Version %1$s</strong> addressed %2$s bugs.', 34 ), '3.9.1', number_format_i18n( 34 ) ); ?>
-		<?php printf( __( 'For more information, see <a href="%s">the release notes</a>.' ), 'http://codex.wordpress.org/Version_3.9.1' ); ?>
- 	</p>
-</div>
-
-<div class="changelog">
-	<div class="about-overview">
-	<?php
-	if ( ! is_ssl() && ( $locale = get_locale() ) && 'en_' === substr( $locale, 0, 3 ) ) : ?>
-		<embed src="//v0.wordpress.com/player.swf?v=1.03" type="application/x-shockwave-flash" width="640" height="360" wmode="direct" seamlesstabbing="true" allowfullscreen="true" allowscriptaccess="always" overstretch="true" flashvars="guid=sAiXhCfV&amp;isDynamicSeeking=true" title=""></embed>
-	<?php else : ?>
-		<img class="about-overview-img" src="//s.w.org/images/core/3.9/overview.png?0" />
-	<?php endif; ?>
-	</div>
-	<h2 class="about-headline-callout"><?php _e( 'A smoother media editing&nbsp;experience' ); ?></h2>
-	<div class="feature-section col three-col">
-		<div class="col-1">
-			<img src="//s.w.org/images/core/3.9/editor.jpg?0" />
-			<h4><?php _e( 'Improved visual editing' ); ?></h4>
-			<p><?php _e( 'The updated visual editor has improved speed, accessibility, and mobile support.' );
-				echo ' ' . __( 'You can paste into the visual editor from your word processor without wasting time to clean up messy styling. (Yeah, we&#8217;re talking about you, Microsoft Word.)' ); ?></p>
+		<div class="headline-feature feature-video">
+			<iframe width="1050" height="591" src="<?php echo esc_url( $video_url ); ?>" frameborder="0" allowfullscreen></iframe>
+			<script src="https://videopress.com/videopress-iframe.js"></script>
 		</div>
-		<div class="col-2">
-			<img src="//s.w.org/images/core/3.9/image.gif?0" />
-			<h4><?php _e( 'Edit images easily' ); ?></h4>
-			<p><?php _e( 'With quicker access to crop and rotation tools, it&#8217;s now much easier to edit your images while editing posts. You can also scale images directly in the editor to find just the right fit.' ); ?></p>
-		</div>
-		<div class="col-3 last-feature">
-			<img src="//s.w.org/images/core/3.9/drop.jpg?0" />
-			<h4><?php _e( 'Drag and drop your images' ); ?></h4>
-			<p><?php _e( 'Uploading your images is easier than ever. Just grab them from your desktop and drop them onto the editor.' ); ?></p>
-		</div>
-	</div>
 
-	<hr>
+		<hr/>
 
-	<div class="feature-section col two-col">
-		<div class="col-1">
-			<img src="//s.w.org/images/core/3.9/gallery.jpg?0" />
-			<h4><?php _e( 'Gallery previews' ); ?></h4>
-			<p><?php _e( 'Galleries display a beautiful grid of images right in the editor, just like they do in your published post.' ); ?></p>
-		</div>
-		<div class="col-2 last-feature">
-			<div class="wp-playlist wp-audio-playlist wp-playlist-light">
-				<div class="wp-playlist-current-item"></div>
-				<audio controls="controls" preload="metadata"></audio>
-				<div class="wp-playlist-next"></div>
-				<div class="wp-playlist-prev"></div>
-				<?php
-				$audio_icon_js = esc_js( includes_url( 'images/media/audio.png' ) );
-				$wp_host = '//s.w.org/images/core/3.9/';
-				?>
+		<div class="feature-section two-col">
+			<?php foreach ( $major_features as $feature ) : ?>
+			<div class="col">
+				<div class="media-container">
+					<?php
+					// Video.
+					if ( is_array( $feature['src'] ) ) :
+						echo wp_video_shortcode( array(
+							'mp4'      => $feature['src']['mp4'],
+							'ogv'      => $feature['src']['ogv'],
+							'webm'     => $feature['src']['webm'],
+							'loop'     => true,
+							'autoplay' => true,
+							'width'    => 500,
+							'height'   => 284
+						) );
 
-				<script type="application/json">{
-					"type":"audio",
-					"tracklist":true,
-					"tracknumbers":true,
-					"images":true,
-					"artists":true,
-					"tracks":[{
-						"src":"<?php echo $wp_host ?>AintMisbehavin.mp3",
-						"type":"audio\/mpeg","title":"Ain't Misbehavin'","caption":"","description":"",
-						"meta":{
-							"artist":"Louis Armstrong & His Orchestra",
-							"album":"78 RPMs & Cylinder Recordings",
-							"genre":"Jazz",
-							"length_formatted":"3:21"
-						},
-						"image":{"src":"//s.w.org/images/core/3.9/louis.jpg","width":308,"height":240},
-						"thumb":{"src":"//s.w.org/images/core/3.9/louis.jpg","width":308,"height":240}
-					},
-					{
-						"src":"<?php echo $wp_host ?>JellyRollMorton-BuddyBoldensBlues.mp3",
-						"type":"audio\/mpeg","title":"Buddy Bolden's Blues","caption":"","description":"",
-						"meta":{
-							"artist":"Jelly Roll Morten",
-							"album":"78 RPMs & Cylinder Recordings",
-							"genre":"Jazz",
-							"length_formatted":"2:09"
-						},
-						"image":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64},
-						"thumb":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64}
-					},
-					{
-						"src":"<?php echo $wp_host ?>DavenportBlues.mp3",
-						"type":"audio\/mpeg","title":"Davenport Blues","caption":"","description":"",
-						"meta":{
-							"artist":"Bix Beiderbecke & His Rhythm Jugglers",
-							"album":"78 RPMs & Cylinder Recordings",
-							"genre":"Jazz",
-							"length_formatted":"2:48"
-						},
-						"image":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64},
-						"thumb":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64}
-					},
-					{
-						"src":"<?php echo $wp_host ?>WolverineBlues.mp3",
-						"type":"audio\/mpeg","title":"Wolverine Blues","caption":"","description":"",
-						"meta":{
-							"artist":"Benny Goodman's Boys",
-							"album":"78 RPMs & Cylinder Recordings",
-							"genre":"Jazz",
-							"length_formatted":"2:55"
-						},
-						"image":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64},
-						"thumb":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64}
-					},
-					{
-						"src":"<?php echo $wp_host ?>Louisiana_Five-Dixie_Blues-1919.mp3",
-						"type":"audio\/mpeg","title":"Dixie Blues","caption":"","description":"",
-						"meta":{
-							"artist":"Louisiana Five",
-							"album":"78 RPMs & Cylinder Recordings",
-							"genre":"Jazz",
-							"length_formatted":"3:01"
-						},
-						"image":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64},
-						"thumb":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64}
-					},
-					{
-						"src":"<?php echo $wp_host ?>Johnny_Hodges_Orchestra-Squaty_Roo-1941.mp3",
-						"type":"audio\/mpeg","title":"Squaty Roo","caption":"","description":"",
-						"meta":{
-							"artist":"Johnny Hodges Orchestra",
-							"album":"78 RPMs & Cylinder Recordings",
-							"genre":"Jazz",
-							"length_formatted":"2:24"
-						},
-						"image":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64},
-						"thumb":{"src":"<?php echo $audio_icon_js ?>","width":48,"height":64}
-					}]
-				}</script>
+					// Image.
+					else:
+					?>
+					<img src="<?php echo esc_url( $feature['src'] ); ?>" />
+					<?php endif; ?>
+				</div>
+				<h3><?php echo $feature['heading']; ?></h3>
+				<p><?php echo $feature['description']; ?></p>
 			</div>
-			<h4><?php _e( 'Do more with audio and video' ); ?></h4>
-			<p><?php _e( 'Images have galleries; now we&#8217;ve added simple audio and video playlists, so you can showcase your music and clips.' ); ?></p>
+			<?php endforeach; ?>
+		</div>
+
+		<div class="feature-section three-col">
+			<?php foreach ( $minor_features as $feature ) : ?>
+			<div class="col">
+				<div class="svg-container">
+					<img src="<?php echo esc_attr( $feature['src'] ); ?>" />
+				</div>
+				<h3><?php echo $feature['heading']; ?></h3>
+				<p><?php echo $feature['description']; ?></p>
+			</div>
+			<?php endforeach; ?>
+		</div>
+
+		<div class="changelog">
+			<h3><?php _e( 'Under the Hood' ); ?></h3>
+
+			<div class="feature-section under-the-hood three-col">
+				<?php foreach ( $tech_features as $feature ) : ?>
+				<div class="col">
+					<h4><?php echo $feature['heading']; ?></h4>
+					<p><?php echo $feature['description']; ?></p>
+				</div>
+				<?php endforeach; ?>
+			</div>
+
+			<div class="return-to-dashboard">
+				<?php if ( current_user_can( 'update_core' ) && isset( $_GET['updated'] ) ) : ?>
+					<a href="<?php echo esc_url( self_admin_url( 'update-core.php' ) ); ?>">
+						<?php is_multisite() ? _e( 'Return to Updates' ) : _e( 'Return to Dashboard &rarr; Updates' ); ?>
+					</a> |
+				<?php endif; ?>
+				<a href="<?php echo esc_url( self_admin_url() ); ?>"><?php is_blog_admin() ? _e( 'Go to Dashboard &rarr; Home' ) : _e( 'Go to Dashboard' ); ?></a>
+			</div>
+
 		</div>
 	</div>
-</div>
-
-<hr>
-
-<div class="changelog customize">
-	<div class="feature-section col two-col">
-		<div>
-			<?php
-				echo wp_video_shortcode( array(
-					'mp4'      => '//s.w.org/images/core/3.9/widgets.mp4',
-					'ogv'      => '//s.w.org/images/core/3.9/widgets.ogv',
-					'webm'     => '//s.w.org/images/core/3.9/widgets.webm',
-					'loop'     => true,
-					'autoplay' => true,
-					'width'    => 499
-				) );
-			?>
-			<h4><?php _e( 'Live widget and header previews' ); ?></h4>
-			<p><?php _e( 'Add, edit, and rearrange your site&#8217;s widgets right in the theme customizer. No &#8220;save and surprise&#8221; &mdash; preview your changes live and only save them when you&#8217;re ready.' ); ?></p>
-			<p><?php _e( 'The improved header image tool also lets you upload, crop, and manage headers while customizing your theme.' ); ?></p>
-		</div>
-		<div class="last-feature">
-			<img src="//s.w.org/images/core/3.9/theme.jpg?0" />
-			<h4><?php _e( 'Stunning new theme browser' ); ?></h4>
-			<p><?php _e( 'Looking for a new theme should be easy and fun. Lose yourself in the boundless supply of free WordPress.org themes with the beautiful new theme browser.' ); ?></p>
-		<?php if ( current_user_can( 'install_themes' ) ) { ?>
-			<p><a href="<?php echo network_admin_url( 'theme-install.php' ); ?>" class="button button-large button-primary"><?php _e( 'Browse Themes' ); ?></a></p>
-		<?php } ?>
-		</div>
-	</div>
-</div>
-
-<hr>
-
-<div class="changelog under-the-hood">
-	<h3><?php _e( 'Under the Hood' ); ?></h3>
-
-	<div class="feature-section col three-col">
-		<div>
-			<h4><?php _e( 'Semantic Captions and Galleries' ); ?></h4>
-			<p><?php _e( 'Theme developers have new options for images and galleries that use intelligent HTML5 markup.' ); ?></p>
-
-			<h4><?php _e( 'Inline Code Documentation' ); ?></h4>
-			<p><?php _e( 'Every action and filter hook in WordPress is now documented, along with expanded documentation for the media manager and customizer APIs.' ); ?></p>
-		</div>
-		<div>
-			<h4><?php _e( 'External Libraries' ); ?></h4>
-			<p><?php _e( 'Updated libraries: TinyMCE&nbsp;4, jQuery&nbsp;1.11, Backbone&nbsp;1.1, Underscore&nbsp;1.6, Plupload&nbsp;2, MediaElement&nbsp;2.14, Masonry&nbsp;3.' ); ?></p>
-
-			<h4><?php _e( 'Improved Database Layer' ); ?></h4>
-			<p><?php _e( 'Database connections are now more fault-resistant and have improved compatibility with PHP 5.5 and MySQL 5.6.' ); ?></p>
-		</div>
-		<div class="last-feature">
-			<h4><?php _e( 'New Utility Functions' ); ?></h4>
-			<p><?php _e( 'Identify a hook in progress with <code>doing_action()</code> and <code>doing_filter()</code>, and manipulate custom image sizes with <code>has_image_size()</code> and <code>remove_image_size()</code>.' ); ?></p>
-			<p><?php _e( 'Plugins and themes registering custom image sizes can now register suggested cropping points. For example, prevent heads from being cropped out of photos with a top-center crop.' ); ?></p>
-		</div>
-</div>
-
-<hr>
-
-<div class="return-to-dashboard">
-	<?php if ( current_user_can( 'update_core' ) && isset( $_GET['updated'] ) ) : ?>
-	<a href="<?php echo esc_url( self_admin_url( 'update-core.php' ) ); ?>"><?php
-		is_multisite() ? _e( 'Return to Updates' ) : _e( 'Return to Dashboard &rarr; Updates' );
-	?></a> |
-	<?php endif; ?>
-	<a href="<?php echo esc_url( self_admin_url() ); ?>"><?php
-		is_blog_admin() ? _e( 'Go to Dashboard &rarr; Home' ) : _e( 'Go to Dashboard' ); ?></a>
-</div>
-
-</div>
 <?php
 
 include( ABSPATH . 'wp-admin/admin-footer.php' );
