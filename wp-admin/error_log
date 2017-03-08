@@ -8,3 +8,5 @@
 [29-Aug-2015 07:20:58] WordPress database error Duplicate key name 'meta_key' for query ALTER TABLE upbeat_commentmeta ADD KEY meta_key (meta_key) made by wp_upgrade, make_db_current_silent, dbDelta
 [29-Aug-2015 07:20:58] WordPress database error Duplicate key name 'meta_key' for query ALTER TABLE upbeat_postmeta ADD KEY meta_key (meta_key) made by wp_upgrade, make_db_current_silent, dbDelta
 [29-Aug-2015 07:20:58] WordPress database error Duplicate key name 'post_name' for query ALTER TABLE upbeat_posts ADD KEY post_name (post_name) made by wp_upgrade, make_db_current_silent, dbDelta
+[08-Mar-2017 16:34:56 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'msilva'@'localhost' (using password: NO) in /home1/ayoaycoc/public_html/upbeat/wp-content/themes/wootique/functions/admin-interface.php on line 111
+[08-Mar-2017 16:34:56 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home1/ayoaycoc/public_html/upbeat/wp-content/themes/wootique/functions/admin-interface.php on line 111
