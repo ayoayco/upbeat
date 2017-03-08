@@ -1,0 +1,6 @@
+[01-Sep-2016 09:13:19 America/Denver] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/SimplePie/Cache/Memcache.php on line 59
+[06-Sep-2016 08:31:30 America/Denver] PHP Fatal error:  Class 'SimplePie_Cache_DB' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/SimplePie/Cache/MySQL.php on line 58
+[15-Sep-2016 15:30:47 America/Denver] PHP Fatal error:  Class 'SimplePie_Cache_DB' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/SimplePie/Cache/MySQL.php on line 58
+[29-Sep-2016 15:00:27 America/Denver] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/SimplePie/Cache/File.php on line 52
+[01-Oct-2016 03:20:49 America/Denver] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/SimplePie/Cache/DB.php on line 52
+[11-Oct-2016 14:04:35 America/Denver] PHP Fatal error:  Class 'SimplePie_Cache_DB' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/SimplePie/Cache/MySQL.php on line 58

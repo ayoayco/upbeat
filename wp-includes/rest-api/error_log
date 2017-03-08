@@ -1,0 +1,3 @@
+[12-Jul-2016 01:37:34 America/Denver] PHP Fatal error:  Class 'WP_HTTP_Response' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/rest-api/class-wp-rest-response.php on line 17
+[23-Jul-2016 10:36:29 America/Denver] PHP Fatal error:  Class 'WP_HTTP_Response' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/rest-api/class-wp-rest-response.php on line 17
+[04-Aug-2016 16:10:28 America/Denver] PHP Fatal error:  Class 'WP_HTTP_Response' not found in /home1/ayoaycoc/public_html/upbeat/wp-includes/rest-api/class-wp-rest-response.php on line 17
